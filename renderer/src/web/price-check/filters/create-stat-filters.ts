@@ -5,7 +5,7 @@ import { FilterTag, ItemHasEmptyModifier, StatFilter } from './interfaces'
 import { filterPseudo } from './pseudo'
 import { applyRules as applyAtzoatlRules } from './pseudo/atzoatl-rules'
 import { applyRules as applyMirroredTabletRules } from './pseudo/reflection-rules'
-import { filterItemProp, filterBasePercentile } from './pseudo/item-property'
+import { filterItemProp, filterBasePercentile, filterMemoryStrands } from './pseudo/item-property'
 import { decodeOils, applyAnointmentRules } from './pseudo/anointments'
 import { StatBetter, CLIENT_STRINGS } from '@/assets/data'
 
@@ -66,6 +66,7 @@ export function createExactStatFilters (
   }
 
   filterBasePercentile(ctx)
+  filterMemoryStrands(ctx)
 
   ctx.filters.push(
     ...ctx.statsByType.map(mod => calculatedStatToFilter(mod, ctx.searchInRange, item))
@@ -141,6 +142,7 @@ export function initUiModFilters (
     if (item.info.refName === "Emperor's Vigilance") {
       filterBasePercentile(ctx)
     }
+    filterMemoryStrands(ctx, 'hide_memory_strands')
   }
 
   if (!item.isCorrupted && !item.isMirrored) {
@@ -221,6 +223,8 @@ export function calculatedStatToFilter (
       if (!fixedStats.includes(filter.statRef)) {
         filter.tag = FilterTag.Variant
       }
+    } else if (sources.some(s => s.modifier.info.generation === 'foulborn')) {
+      filter.tag = FilterTag.Foulborn
     } else if (sources.some(s => CLIENT_STRINGS.SHAPER_MODS.includes(s.modifier.info.name!))) {
       filter.tag = FilterTag.Shaper
     } else if (sources.some(s => CLIENT_STRINGS.ELDER_MODS.includes(s.modifier.info.name!))) {
@@ -420,6 +424,8 @@ function finalFilterTweaks (ctx: FiltersCreationContext) {
         // hide only if fractured mod has corresponding explicit variant
         filter.hidden = 'filters.hide_for_crafting'
       }
+    } else if (filter.tag === FilterTag.Foulborn || filter.tag === FilterTag.Variant) {
+      filter.disabled = false
     }
   }
 
