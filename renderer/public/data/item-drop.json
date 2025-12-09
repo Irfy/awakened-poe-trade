@@ -1286,25 +1286,15 @@
   },
   {
     "query": [
-      "ITEM::Remnant of Corruption"
-    ],
-    "items": [
-      "ITEM::Essence of Insanity",
-      "ITEM::Essence of Horror",
-      "ITEM::Essence of Delirium",
-      "ITEM::Essence of Hysteria"
-    ]
-  },
-  {
-    "query": [
       "ITEM::Essence of Insanity",
       "ITEM::Essence of Horror",
       "ITEM::Essence of Delirium",
       "ITEM::Essence of Hysteria"
     ],
     "items": [
-      "ITEM::Remnant of Corruption"
-    ]
+      "ITEM::Vaal Orb",
+      "ITEM::Primal Crystallised Lifeforce"
+     ]
   },
   {
     "query": [
