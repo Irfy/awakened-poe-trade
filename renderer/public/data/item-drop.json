@@ -1291,7 +1291,9 @@
       "ITEM::Essence of Delirium",
       "ITEM::Essence of Hysteria"
     ],
-    "items": []
+    "items": [
+      "ITEM::Primal Crystallised Lifeforce"
+    ]
   },
   {
     "query": [
